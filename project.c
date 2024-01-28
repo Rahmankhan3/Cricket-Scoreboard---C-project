@@ -213,5 +213,6 @@ int main()
     {
         printf("%s \nScore=%d\n", S[i].name, S[i].score);
     }
+    printf("Thank You");
     return 0;
 }
