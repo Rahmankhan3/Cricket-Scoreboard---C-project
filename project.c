@@ -13,13 +13,14 @@ struct batsman
 };
 int main()
 {
-    int choice, j, i, n, wide = 0, nb = 0, four = 0, six = 0, one = 0, two = 0, three = 0, D = 0;
-    int run = 0, wicket = 0, over = 0, ball = 0,striker=0,nonstriker=0;
+    int choice, j, i, n, wide = 0, nb = 0, four = 0, six = 0, one = 0, two = 0, three = 0, D = 0,temp;
+    int run = 0, wicket = 0, over = 0, ball = 0,striker=0,nonstriker=1;
     char select;
 
     struct batsman S[11];
     for (i = 0; i < 11; i++)
     {
+        S[i].score=0;
         printf("Enter name of Batsman %d\n", i + 1);
         scanf("%s", S[i].name);
     }
@@ -53,7 +54,10 @@ int main()
                     case 'W':
                         wicket = wicket + 1;
                         ball = ball + 1;
-                        goto label;
+                        striker++;
+                        if(striker==nonstriker)
+                        striker++;
+                        break;
                     case 'D':
                         ball = ball + 1;
                         D+=1;
@@ -74,16 +78,22 @@ int main()
                     case 'S':
                         run = run + 1;
                         runb += 1;
+                        S[striker].score+=1;
                         ball = ball + 1;
+                        temp=striker;
+                        striker=nonstriker;
+                        nonstriker=temp;
                         break;
                     case 'W':
                         wide = wide + 1;
                         run = run + 1;
+                        striker++;
                       wide+=1;
                         break;
                     case 'N':
                         run += 1;
                         runb += 1;
+                         S[striker].score+=1;
                         nb += 1;
                         printf("FREE HIT");
                         break;
@@ -103,6 +113,7 @@ int main()
                         run = run + 2;
                         runb += 2;
                         ball = ball + 1;
+                         S[striker].score+=2;
                         break;
                     case 'N':
                         run += 2;
@@ -125,12 +136,20 @@ int main()
                         three = three + 1;
                         run = run + 3;
                         runb += 3;
+                         S[striker].score+=3;
                         ball = ball + 1;
+                        temp=striker;
+                        striker=nonstriker;
+                        nonstriker=temp;
                         break;
                     case 'N':
                         run += 3;
                         runb += 3;
                         nb += 1;
+                        temp=striker;
+                        striker=nonstriker;
+                        nonstriker=temp;
+                        S[striker].score+=3;
                         printf("FREE HIT");
                         break;
                     default:
@@ -148,12 +167,14 @@ int main()
                         four = four + 1;
                         run = run + 4;
                         runb += 4;
+                           S[striker].score+=4;
                         ball = ball + 1;
                         break;
                     case 'N':
                         run += 4;
                         runb += 4;
                         nb += 1;
+                           S[striker].score+=4;
                         printf("FREE HIT");
                         break;
 
@@ -172,12 +193,14 @@ int main()
                         six = six + 1;
                         run = run + 6;
                         runb += 6;
+                           S[striker].score+=6;
                         ball = ball + 1;
                         nb += 1;
                         break;
                     case 'N':
                         run += 6;
                         runb += 6;
+                           S[striker].score+=6;
                         printf("FREE HIT");
                         break;
                     default:
@@ -190,6 +213,9 @@ int main()
                 {
                     ball = 0;
                     over += 1;
+                      temp=striker;
+                        striker=nonstriker;
+                        nonstriker=temp;
                     if (over == n)
                     {
                         break;
@@ -198,10 +224,11 @@ int main()
                 printf("\nScore : %d/%d\n", run, wicket);
                 printf("Over : %d.%d\n", over, ball);
                 printf("*******************************\n");
+                printf("%s* : %d",S[striker].name,S[striker].score);
+                printf("\n%s : %d\n",S[nonstriker].name,S[nonstriker].score);
+                  printf("*******************************\n");
             }
         }
-    label:
-        S[j].score = runb;
     }
 
     printf("\n**************\nMATCH ENDED\n**************\n");
@@ -213,6 +240,5 @@ int main()
     {
         printf("%s \nScore=%d\n", S[i].name, S[i].score);
     }
-    printf("Thank You");
     return 0;
 }
