@@ -241,7 +241,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                 printf("\n");
                 printf("%s* : %d", S[striker].name, S[striker].score);
                 printf("\n%s : %d\n", S[nonstriker].name, S[nonstriker].score);
-                printf("\n\n %s   %d-%d (%d.%d)", K[bowler].name, K[bowler].wicket, K[bowler].score, K[bowler].over, K[bowler].ball);
+                printf("\n\n %s   %d-%d (%d.%d)", K[bowler].name, K[bowler].wicket, K[bowler].ballscore, K[bowler].over, K[bowler].ball);
                 printf("\n\n");
             }
         }
