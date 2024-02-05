@@ -15,15 +15,15 @@ struct batsman
     int ball;
     int over;
 };
-void team(struct batsman S[],struct batsman K[],int n)
+void team(struct batsman S[], struct batsman K[], int n)
 {
     int choice, j, i, wide = 0, nb = 0, four = 0, six = 0, one = 0, two = 0, three = 0, D = 0, temp;
-    int run = 0, wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler;
+    int run = 0, wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler,x;
     char select;
     printf("\nLET THE MATCH BEGIN\n");
     printf("\nScore : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
-    printf("*\n");
+    printf("\n");
 
     for (j = 0; j < 11; j++)
     {
@@ -40,6 +40,13 @@ void team(struct batsman S[],struct batsman K[],int n)
                     }
                     scanf("%d", &bowler);
                     bowler -= 1;
+                    if(bowler==x)
+                    {
+                      printf("\nSame bowler cant't ball simultaneous overs\n");
+                        printf("\nSelect the bowler\n");
+                    scanf("%d",&bowler);
+                    bowler-=1;
+                    }
                 }
 
                 printf("Enter Score on this ball \n");
@@ -69,7 +76,7 @@ void team(struct batsman S[],struct batsman K[],int n)
 
                         break;
                     case 'N':
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         nb += 1;
                         break;
                     }
@@ -104,7 +111,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                         K[bowler].ballscore += 1;
                         S[striker].score += 1;
                         nb += 1;
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         break;
                     default:
                         printf("Invalid input\n");
@@ -129,7 +136,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                         run += 2;
                         K[bowler].ballscore += 2;
                         nb += 1;
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         break;
                     default:
                         printf("Invalid input\n");
@@ -161,7 +168,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                         striker = nonstriker;
                         nonstriker = temp;
                         S[striker].score += 3;
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         break;
                     default:
                         printf("Invalid input\n");
@@ -187,7 +194,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                         K[bowler].ballscore += 4;
                         nb += 1;
                         S[striker].score += 4;
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         break;
 
                     default:
@@ -214,7 +221,7 @@ void team(struct batsman S[],struct batsman K[],int n)
                         run += 6;
                         K[bowler].ballscore += 6;
                         S[striker].score += 6;
-                        printf("FREE HIT");
+                        printf("\nFREE HIT\n");
                         break;
                     default:
                         printf("Invalid input\n");
@@ -236,36 +243,34 @@ void team(struct batsman S[],struct batsman K[],int n)
                         break;
                     }
                 }
-                printf("\nScore : %d/%d\n", run, wicket);
+                printf("********************************\nScore : %d/%d\n", run, wicket);
                 printf("Over : %d.%d\n", over, ball);
                 printf("\n");
                 printf("%s* : %d", S[striker].name, S[striker].score);
                 printf("\n%s : %d\n", S[nonstriker].name, S[nonstriker].score);
                 printf("\n\n %s   %d-%d (%d.%d)", K[bowler].name, K[bowler].wicket, K[bowler].ballscore, K[bowler].over, K[bowler].ball);
-                printf("\n\n");
+                printf("\n*****************************************\n");
+                x=bowler;
             }
         }
     }
-    printf("\n\nMATCH ENDED\n*\n");
-    printf("*\n");
-    printf("\nFinal Score : %d/%d\n", run, wicket);
+   
+    printf("\n*****************************\n");
+    printf("\nTEAM SCORE : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
-    printf("\n");
-    for (i = 0; i < 11; i++)
-    {
-        printf("%s \nScore=%d\n", S[i].name, S[i].score);
-    }
+    printf(" ****************************\n");
 }
 int main()
 {
-int i,n;
-        printf("Enter the number of over in the match\n");
-        scanf("%d",&n);
+    int i, n;
+    printf("Enter the number of over in the match\n");
+    scanf("%d", &n);
     struct batsman S[11];
     struct batsman K[11];
+    printf("\nTeam A\n****************************\n");
     for (i = 0; i < 11; i++)
     {
-        printf("Enter name of Batsman %d\n", i + 1);
+        printf("Enter name of Batsman %d\t\t", i + 1);
         scanf("%s", S[i].name);
         S[i].score = 0;
         S[i].ballscore = 0;
@@ -273,9 +278,10 @@ int i,n;
         S[i].over = 0;
         S[i].ball = 0;
     }
+    printf("\nTeam B\n****************************\n");
     for (i = 0; i < 11; i++)
     {
-        printf("Enter name of Batsman %d\n", i + 1);
+        printf("Enter name of Batsman %d\t\t", i + 1);
         scanf("%s", K[i].name);
         K[i].score = 0;
         K[i].ballscore = 0;
@@ -283,8 +289,20 @@ int i,n;
         K[i].over = 0;
         K[i].ball = 0;
     }
-   team(S,K,n);
-   printf("\n\n\nTEAM 2\n\n\n");
-team(K,S,n);
+    team(S, K, n);
+    printf("\n\n\nINNING CHANGE\n\n\n");
+    team(K, S, n);
+    printf("\nTeam A\n****************************\n");
+for (i = 0; i < 11; i++)
+    {
+        printf("%s     :%d\n", S[i].name, S[i].score);
+    }
+    printf("\n****************************\n");
+    printf("\nTeam B\n****************************\n");
+for (i = 0; i < 11; i++)
+    {
+        printf("%s    :%d\n", K[i].name, K[i].score);
+    }
+    printf("\n****************************\n");
     return 0;
 }
