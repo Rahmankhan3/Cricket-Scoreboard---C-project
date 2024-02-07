@@ -18,9 +18,9 @@ struct batsman
 void team(struct batsman S[], struct batsman K[], int n)
 {
     int choice, j, i, wide = 0, nb = 0, four = 0, six = 0, one = 0, two = 0, three = 0, D = 0, temp;
-    int run = 0, wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler,x;
+    int run = 0, wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler, x;
     char select;
-    printf("\nLET THE MATCH BEGIN\n");
+    printf("\nLET THE INNING BEGIN\n");
     printf("\nScore : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
     printf("\n");
@@ -40,12 +40,12 @@ void team(struct batsman S[], struct batsman K[], int n)
                     }
                     scanf("%d", &bowler);
                     bowler -= 1;
-                    if(bowler==x)
+                    if (bowler == x)
                     {
-                      printf("\nSame bowler cant't ball simultaneous overs\n");
+                        printf("\nSame bowler cant't ball simultaneous overs\n");
                         printf("\nSelect the bowler\n");
-                    scanf("%d",&bowler);
-                    bowler-=1;
+                        scanf("%d", &bowler);
+                        bowler -= 1;
                     }
                 }
 
@@ -228,6 +228,8 @@ void team(struct batsman S[], struct batsman K[], int n)
                     }
                     break;
                 }
+                default:
+                    printf("Enter proper Scoren\n");
                 }
                 if (ball == 6)
                 {
@@ -250,11 +252,11 @@ void team(struct batsman S[], struct batsman K[], int n)
                 printf("\n%s : %d\n", S[nonstriker].name, S[nonstriker].score);
                 printf("\n\n %s   %d-%d (%d.%d)", K[bowler].name, K[bowler].wicket, K[bowler].ballscore, K[bowler].over, K[bowler].ball);
                 printf("\n*****************************************\n");
-                x=bowler;
+                x = bowler;
             }
         }
     }
-   
+
     printf("\n*****************************\n");
     printf("\nTEAM SCORE : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
@@ -262,12 +264,17 @@ void team(struct batsman S[], struct batsman K[], int n)
 }
 int main()
 {
-    int i, n;
+    int i, n, toss, opt;
+    char team1[20], team2[20];
     printf("Enter the number of over in the match\n");
     scanf("%d", &n);
     struct batsman S[11];
     struct batsman K[11];
-    printf("\nTeam A\n****************************\n");
+    printf("Enter the name of Team A \n");
+    scanf("%s", team1);
+    printf("Enter the name of Team B \n");
+    scanf("%s", team2);
+    printf("\n%s\n****************************\n", team1);
     for (i = 0; i < 11; i++)
     {
         printf("Enter name of Batsman %d\t\t", i + 1);
@@ -278,7 +285,7 @@ int main()
         S[i].over = 0;
         S[i].ball = 0;
     }
-    printf("\nTeam B\n****************************\n");
+    printf("\n%s\n****************************\n", team2);
     for (i = 0; i < 11; i++)
     {
         printf("Enter name of Batsman %d\t\t", i + 1);
@@ -289,17 +296,68 @@ int main()
         K[i].over = 0;
         K[i].ball = 0;
     }
-    team(S, K, n);
-    printf("\n\n\nINNING CHANGE\n\n\n");
-    team(K, S, n);
+    printf("\nSelect the toss Winner\n1.%s\n2.%s\n", team1, team2);
+    scanf("%d", &toss);
+    switch (toss)
+    {
+    case 1:
+    {
+        printf("\nWhat would you like to do\n1. Batting\n2. Bowling\n");
+        scanf("%d", &opt);
+        switch (opt)
+        {
+        case 1:
+
+            printf("%s won the Toss and Choose to Bat\n", team1);
+            team(S, K, n);
+            printf("\n\nINNING CHANGE\n\n");
+            team(K, S, n);
+            break;
+        case 2:
+            printf("%s won the Toss and Choose to Bowl\n", team1);
+            team(K, S, n);
+            printf("\n\nINNING CHANGE\n\n");
+            team(S, K, n);
+            break;
+        default:
+            printf("Invalid Input");    
+        }
+break;
+    }
+    case 2:
+    {
+        printf("\nWhat would you like to do\n1. Batting\n2. Bowling\n");
+        scanf("%d", &opt);
+        switch (opt)
+        {
+        case 1:
+
+            printf("%s won the Toss and Choose to Bat\n", team2);
+            team(K, S, n);
+            printf("\n\nINNING CHANGE\n\n");
+            team(S, K, n);
+            break;
+        case 2:
+            printf("%s won the Toss and Choose to Bowl\n", team2);
+            team(S, K, n);
+            printf("\n\nINNING CHANGE\n\n");
+            team(K, S, n);
+            break;
+        default:
+            printf("Invalid Input");    
+        }
+break;
+    }
+    }
+
     printf("\nTeam A\n****************************\n");
-for (i = 0; i < 11; i++)
+    for (i = 0; i < 11; i++)
     {
         printf("%s     :%d\n", S[i].name, S[i].score);
     }
     printf("\n****************************\n");
     printf("\nTeam B\n****************************\n");
-for (i = 0; i < 11; i++)
+    for (i = 0; i < 11; i++)
     {
         printf("%s    :%d\n", K[i].name, K[i].score);
     }
