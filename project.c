@@ -15,11 +15,12 @@ struct batsman
     int ball;
     int over;
 };
-void team(struct batsman S[], struct batsman K[], int n)
+void team(struct batsman S[], struct batsman K[], int n,int *score)
 {
     int choice, j, i, wide = 0, nb = 0, four = 0, six = 0, one = 0, two = 0, three = 0, D = 0, temp;
-    int run = 0, wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler, x;
+    int  wicket = 0, over = 0, ball = 0, striker = 0, nonstriker = 1, bowler, x;
     char select;
+   int run=0;
     printf("\nLET THE INNING BEGIN\n");
     printf("\nScore : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
@@ -256,7 +257,7 @@ void team(struct batsman S[], struct batsman K[], int n)
             }
         }
     }
-
+*score=run;
     printf("\n*****************************\n");
     printf("\nTEAM SCORE : %d/%d\n", run, wicket);
     printf("Over : %d.%d\n", over, ball);
@@ -264,7 +265,7 @@ void team(struct batsman S[], struct batsman K[], int n)
 }
 int main()
 {
-    int i, n, toss, opt;
+    int i, n, toss, opt,run1,run2;
     char team1[20], team2[20];
     printf("Enter the number of over in the match\n");
     scanf("%d", &n);
@@ -309,15 +310,15 @@ int main()
         case 1:
 
             printf("%s won the Toss and Choose to Bat\n", team1);
-            team(S, K, n);
+            team(S, K, n,&run1);
             printf("\n\nINNING CHANGE\n\n");
-            team(K, S, n);
+            team(K, S, n,&run2);
             break;
         case 2:
             printf("%s won the Toss and Choose to Bowl\n", team1);
-            team(K, S, n);
+            team(K, S, n,&run2);
             printf("\n\nINNING CHANGE\n\n");
-            team(S, K, n);
+            team(S, K, n,&run1);
             break;
         default:
             printf("Invalid Input");    
@@ -333,15 +334,15 @@ break;
         case 1:
 
             printf("%s won the Toss and Choose to Bat\n", team2);
-            team(K, S, n);
+            team(K, S, n,&run2);
             printf("\n\nINNING CHANGE\n\n");
-            team(S, K, n);
+            team(S, K, n,&run1);
             break;
         case 2:
             printf("%s won the Toss and Choose to Bowl\n", team2);
-            team(S, K, n);
+            team(S, K, n,&run1);
             printf("\n\nINNING CHANGE\n\n");
-            team(K, S, n);
+            team(K, S, n,&run2);
             break;
         default:
             printf("Invalid Input");    
@@ -350,17 +351,29 @@ break;
     }
     }
 
-    printf("\nTeam A\n****************************\n");
+    printf("\nTeam %s\n****************************\n",team1);
     for (i = 0; i < 11; i++)
     {
         printf("%s     :%d\n", S[i].name, S[i].score);
     }
     printf("\n****************************\n");
-    printf("\nTeam B\n****************************\n");
+    printf("\nTeam %s\n****************************\n",team2);
     for (i = 0; i < 11; i++)
     {
         printf("%s    :%d\n", K[i].name, K[i].score);
     }
+    printf("\n****************************\n");
+
+    if(run1>run2)
+    {
+        printf("%s won the match by %d runs\n",team1,run1-run2);
+    }
+    else if (run2>run1){
+        printf("%s won the match by %d runs\n",team2,run2-run1);
+
+    }
+    else
+    printf("The match is draw\n");
     printf("\n****************************\n");
     return 0;
 }
